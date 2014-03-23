@@ -16,3 +16,5 @@ Messages with the facilities 'local6' and 'local7' will be forwarded through log
 statsd is installed with the default configuration (port 8125).
 
 log4j.xml defines appenders for the several syslog facilities, their messages can be handled from logstash. It defines also an appender to send gelf messages directly to graylog2.
+
+logstash configuration files: mylogstash.conf and patterns/custom_patterns
