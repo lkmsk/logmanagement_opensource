@@ -1,0 +1,3 @@
+FACILITY_NAME [0-9A-Za-z]+
+COMPONENT_ID (?:[A-Za-z0-9]+)(?:[/])(?:[\d+\.]+[\d+])
+COMP_LIST (%{COMPONENT_ID}[;])+
