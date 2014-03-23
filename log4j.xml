@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+	<appender name="mpc" class="org.apache.log4j.ConsoleAppender">
+		<param name="Target" value="System.out" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%p [%d] : %c{2} %x %X{context} %X{chaininfo} %m %n" />
+		</layout>
+	</appender>
+	<appender name="mpc.gelf" class="gelf4j.log4j.GelfAppender">
+		<param name="Threshold" value="INFO" />
+		<param name="host" value="127.0.0.1" />
+		<param name="port" value="12201" />
+		<param name="compressedChunking" value="true" />
+		<param name="defaultFields"
+			value='{"host": "locahost", "facility": "test", "environment": "DEV", "application": "MyAPP"}' />
+		<param name="additionalFields"
+			value='{"thread_name": "threadName", "exception": "exception"}' />
+	</appender>
+	<appender name="mpc.syslog.f7" class="org.apache.log4j.net.SyslogAppender">
+		<param name="Facility" value="local7" />
+		<param name="FacilityPrinting" value="true" />
+		<param name="Header" value="true" />
+		<param name="SyslogHost" value="127.0.0.1:514" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%p [%d] : %c{2} %X{ip} %X{context} %X{action} %X{chaininfo} %X{duration} -- %m%n" />
+		</layout>
+	</appender>
+	<appender name="mpc.syslog.f6" class="org.apache.log4j.net.SyslogAppender">
+		<param name="Facility" value="local6" />
+		<param name="FacilityPrinting" value="true" />
+		<param name="Header" value="true" />
+		<param name="SyslogHost" value="127.0.0.1:514" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%p [%d] : %c{2} %X{ip} %X{context} %X{action} %X{chaininfo} %X{requestIp} %X{duration} -- %m%n" />
+		</layout>
+	</appender>
+	<appender name="mpc.syslog.f5" class="org.apache.log4j.net.SyslogAppender">
+		<param name="Facility" value="local5" />
+		<param name="FacilityPrinting" value="true" />
+		<param name="Header" value="true" />
+		<param name="SyslogHost" value="127.0.0.1:514" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%p [%d] : %c{2} %X{ip} %X{context} %X{action} %X{chaininfo} %X{duration} -- %m%n" />
+		</layout>
+	</appender>
+	<appender name="mpc.syslog.f1" class="org.apache.log4j.net.SyslogAppender">
+		<param name="Facility" value="local1" />
+		<param name="FacilityPrinting" value="true" />
+		<param name="Header" value="true" />
+		<param name="SyslogHost" value="127.0.0.1:514" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%p [%d] : %c{2} %X{chaininfo} -- %m%n" />
+		</layout>
+	</appender>
+	<appender name="mpc.syslog.ctxt" class="org.apache.log4j.net.SyslogAppender">
+		<param name="Facility" value="local6" />
+		<param name="FacilityPrinting" value="true" />
+		<param name="Header" value="true" />
+		<param name="SyslogHost" value="127.0.0.1:514" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%p [%d] : %c{2} %X{context} %X{chaininfo} -- %m%n" />
+		</layout>
+	</appender>
+	<logger name="SYSLOG_7">
+        <appender-ref ref="mpc.syslog.f7"/>
+    </logger>
+    <logger name="SYSLOG_6">
+        <appender-ref ref="mpc.syslog.f6"/>
+    </logger>
+    <logger name="SYSLOG_5">
+        <appender-ref ref="mpc.syslog.f5"/>
+    </logger>
+    <logger name="SYSLOG_1">
+        <appender-ref ref="mpc.syslog.f1"/>
+    </logger>
+    <logger name="GELF">
+        <appender-ref ref="mpc.gelf"/>
+    </logger>
+    <logger name="CONSOLE">
+        <appender-ref ref="mpc"/>
+    </logger>
+    <logger name="SYSLOG_CTXT" additivity="false">
+        <appender-ref ref="mpc.syslog.ctxt"/>
+    </logger>
+	<root>
+		<level value="INFO"/>
+		<!-- 
+		<priority value="INFO" />
+		<appender-ref ref="mpc.gelf" />
+		<appender-ref ref="mpc" />
+		<appender-ref ref="mpc.syslog" />
+		-->
+		<appender-ref ref="mpc"/>
+	</root>
+
+</log4j:configuration>
